@@ -8,13 +8,14 @@ export class Entry {
     public type?: string,
     public date?: string,
     public paid?: boolean,
+    public amount?: string,
     public categoryID?: number,
     public category?: Category
   ){}
 
   static types = {
     expense: 'Despesa',
-    renevue: 'Receita'
+    revenue: 'Receita'
   }
 
   get paidText(): string {
