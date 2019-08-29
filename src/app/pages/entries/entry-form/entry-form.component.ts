@@ -23,6 +23,15 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   submittingForm: boolean = false;
   entry: Entry = new Entry();
 
+  imaskConfig = {
+    mask: Number,
+    scale: 2,
+    thousandsSeparator:'',
+    padFractionalZeros: true,
+    normalizeZeros: true,
+    radix: ','
+  }
+
   constructor(
     private entryService: EntryService,
     private route: ActivatedRoute,
@@ -63,7 +72,12 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     this.entryForm = this.formBuilder.group({
       id: [null],
       name: [null, [Validators.required, Validators.minLength(2)]],
-      description: [null]
+      description: [null],
+      type: [null, [Validators.required]],
+      amount: [null, [Validators.required]],
+      date: [null, [Validators.required]],
+      paid: [null, [Validators.required]],
+      categoryID: [null, [Validators.required]]
     })
   }
 
@@ -84,11 +98,11 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
 
   private setPageTitle() {
     if (this.currentAction == 'new') {
-      this.pageTitle = 'Cadastro de nova categoria'
+      this.pageTitle = 'Cadastro de novo lançamento'
     } else {
       const entryName = this.entry.name || '';
 
-      this.pageTitle = 'Editando categoria: ' + entryName;
+      this.pageTitle = 'Editando lançamento: ' + entryName;
     }
   }
 

@@ -4,7 +4,7 @@
       <a routerLink="/">Home</a>
     </li>
     <li class="breadcrumb-item">
-      <a routerLink="/entries">Categorias</a>
+      <a routerLink="/entries">Lançamentos</a>
     </li>
     <li class="breadcrumb-item active">
         {{pageTitle}}
@@ -13,12 +13,12 @@
 </nav>
 
 <div class="row mb-4">
-  <div class="col-md">
+  <div class="col-md-9">
     <h1 class="h2 border-left pl-2">
       {{pageTitle}}
     </h1>
   </div>
-  <div class="col-md">
+  <div class="col-md-3">
     <a class="btn btn-light float-right" routerLink="/entries"> << Voltar </a>
   </div>
 </div>
@@ -26,18 +26,50 @@
 <form [formGroup]="entryForm" (submit)="submitForm()">
   <div class="card">
     <div class="card-header">
-      Informações sobre a categoria
+      Informações sobre o lançamento
     </div>
     <div class="card-body">
       <div class="form-row">
-        <div class="form-group col-md-4">
-          <label for="name">Nome</label>
+        <!--Type-->
+        <div class="form-group col-md-2">
+          <label for="type">Tipo</label>
+          <select name="type" id="type" frmControlName="type" class="form-control">
+            <option value="expense">Despesa</option>
+            <option value="revenue">Receita</option>
+          </select>
+
+          <div class="text-danger" *ngIf="entryForm.get('type').invalid && entryForm.get('type').touched">
+            <div *ngIf="entryForm.get('type').errors.required">dado obrigatório</div>
+          </div>
+        </div>
+        <!--Name-->
+        <div class="form-group col-md-5">
+          <label for="name">Lançamento</label>
           <input type="text" class="form-control" id="name" formControlName="name">
+
           <div class="text-danger" *ngIf="entryForm.get('name').invalid && entryForm.get('name').touched">
             <div *ngIf="entryForm.get('name').errors.required">dado obrigatório</div>
             <div *ngIf="entryForm.get('name').errors.minlength">deve ter no mínimo 2 caracteres</div>
           </div>
         </div>
+        <!--amount-->
+        <div class="form-group col-md-3">
+          <label for="amount">Valor</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text">R$</div>
+            </div>
+            <input [imask]="imaskConfig" type="text" class="form-control text-right" id="amount" formControlName="amount">
+          </div>
+          <div class="text-danger" *ngIf="entryForm.get('amount').invalid && entryForm.get('amount').touched">
+            <div *ngIf="entryForm.get('amount').errors.required">dado obrigatório</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        
+        <!--Description-->
         <div class="form-group col-md-8">
           <label for="description">Descrição</label>
           <input type="text" class="form-control" id="description" formControlName="description">
